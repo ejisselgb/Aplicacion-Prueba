@@ -1,0 +1,92 @@
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+
+.headerPage {
+  padding: 10px;
+}
+
+.imgLogo{
+  width: 106px;
+}
+
+.cardFormHome{
+  margin-top: 5%;
+}
+
+.cardFormHome ion-card-content{
+  padding: 40px 30px 60px 30px;
+}
+
+.cardFormHome ion-card-header{
+  background: #47B85F;
+  text-align: center;
+}
+
+.cardFormHome ion-card-title{
+  color: white;
+  font-size: 25px;
+}
+
+.cardFormHome ion-card-subtitle{
+  color: white;
+}
+
+
+.cardFormHome ion-button{
+  background: #2B573A;
+}
+
+#containerButton{
+  align-content: center;
+  text-align-last: center;
+  margin-top: 20px;
+}
+
+.cardFormHome p{
+  margin-top: 10px;
+  text-align: center;
+}
+
+.cardFormHome ion-input{
+  border: solid 2px #2B573A;
+  margin-top: 10px;
+}
+
+.containerHost{
+  display: flex;
+}
+
+.containerHost ion-input{
+  border: solid 2px #2B573A;
+  margin-right: 20px;
+  padding: 10px;
+}
+
+.containerHost ion-button{
+  background: #2B573A;
+}
+
+.labelHost{
+  color: #737373;
+  margin-top: 40px;
+}
+
+@media only screen and (max-width: 500px) {
+  .containerHost ion-input{
+    font-size: 13px;
+  }
+
+  .containerHost ion-button{
+    margin: 10px 60px 0 60px;
+  }
+
+  .lateralHome{
+    display: none
+  }
+
+  .mainHome{
+    margin: 0px 20px;
+  }
+}

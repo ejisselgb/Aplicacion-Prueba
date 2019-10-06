@@ -1,0 +1,16 @@
+.contentFinal{
+    margin-top: 30px;
+    font-weight: 700;
+    color: #79A346;
+}
+
+@media only screen and (max-width: 500px) {
+    .containerInfo{
+        margin: 0 20px 0 20px;
+    }
+
+    .containerLat{
+        display: none;
+    }
+}
+

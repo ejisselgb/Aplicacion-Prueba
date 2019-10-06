@@ -1,0 +1,7 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "ganaApp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build"
+}

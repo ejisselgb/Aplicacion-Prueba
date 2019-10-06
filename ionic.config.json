@@ -1,0 +1,7 @@
+{
+  "name": "ganaApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
