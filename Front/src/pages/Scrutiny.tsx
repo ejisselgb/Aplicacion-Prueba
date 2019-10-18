@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { IonHeader, IonToolbar, IonPage, IonImg, IonContent, IonRow, IonCol, IonList, IonItem, IonLabel } from '@ionic/react';
+import { IonHeader, IonToolbar, IonPage, IonImg, IonContent, IonRow, IonCol, IonList, IonAlert} from '@ionic/react';
 import { withRouter } from "react-router";
 import image from '../img/logoGana.png';
 import './Scrutiny.css';
@@ -15,7 +15,7 @@ const Scrutiny: React.FC<any> = (props) => {
 
     getAllWinners.then((value: any) =>{
 
-      if(value !== undefined){
+      if(value && typeof value === 'object'){
         value[0].then((x: any) =>{
           let winnerInformation = [];
           let numberInformation = [];
@@ -25,14 +25,31 @@ const Scrutiny: React.FC<any> = (props) => {
           }
           setState({...state, winnerInformation: winnerInformation, numberInformation: numberInformation});
         });
+      }else{
+        setState({
+          ...state,
+          show: true,
+          header: "Oops!",
+          message: value
+        })
       }
     })
   }
 
-  console.log(state);
+  let setShowAlert = () =>{
+    setState({...state, show: false});
+  }
 
   return (
     <IonPage>
+      <IonAlert
+        isOpen={state? state.show : false}
+        onDidDismiss={() => setShowAlert()}
+        header={state ? state.header: null}
+        subHeader={''}
+        message={state ? state.message : null}
+        buttons={['OK']}
+      />
       <IonHeader className="headerPage">
         <IonToolbar>
           <IonImg className="imgLogo" src={image} />

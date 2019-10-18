@@ -44,7 +44,7 @@ export function listLoteries(date){
             return (
             <div className="cointainerLogos" key={x.response.idLotery}>
                 <div className="cardLogos">
-                <IonImg className="imgLogo" src={'http://'+ipservices+':3000/'+x.response.image} />
+                <IonImg className="imgLogo" src={'http://'+ipservices+':8100/'+x.response.image} />
                 </div>
             </div>
             )
@@ -61,18 +61,28 @@ export function listLoteries(date){
 
 export function getLastLoteries(date){
 
-  console.log('http://'+ipservices+':8080/service-gana-app/loteries/winnersdate?date='+date);
     let listLastLoteries = axios.get('http://'+ipservices+':8080/service-gana-app/loteries/winnersdate?date='+date)
      .then(response => {
         let arrayItem = response.data.map(x => {
-          return(
-            <IonItem key={x.response.idWinnerNumber}>
-              <div className="wonLoterie" key={x.response.idWinnerNumber}>
-                  <IonImg className="imgLogo" src={'http://'+ipservices+':3000/'+x.response.imageLotery} />
-                  <p>{x.response.numberWinner}</p>
-              </div>
-            </IonItem>
-          )
+
+          if(x.response.idWinnerNumber > 0 && x.response.numberWinner > 0){
+            return(
+              <IonItem key={x.response.idWinnerNumber}>
+                <div className="wonLoterie">
+                    <IonImg className="imgLogo" src={'http://'+ipservices+':8100/'+x.response.imageLotery} />
+                    <p>{x.response.numberWinner}</p>
+                </div>
+              </IonItem>
+            )
+          }else{
+            return(
+              <IonItem key={1}>
+                <div className="wonLoterie" >
+                    <p>No hay datos para mostrar</p>
+                </div>
+              </IonItem>
+            )
+          }          
         })
         return arrayItem;
       })
@@ -89,7 +99,8 @@ function getLoteryNumbers(number, date){
     if(response.data.length > 0){
         return getWinners(date, response.data);
     }else{
-      console.log("No se encontraron números asociados a la lotería cerrada");
+      let stringError = "No se encontraron números ganadores con la lotería cerrada";
+      return stringError;
     }
   })
   .catch(error => {
@@ -119,8 +130,6 @@ export function closeLoteries(idLotery, date){
 export function getColilla(number){
 
   let date = getDate();
-  console.log("%%% ", number);
-
   let generateInfoWinner = axios.get('http://'+ipservices+':8080/service-gana-app/loteries/winners?number='+number)
   .then(response => {
 
@@ -131,16 +140,14 @@ export function getColilla(number){
       let iva = totalPrize * 0.19;
       let netoPrize = totalPrize - iva;
       let fullName = response.data[i].response.name + " " + response.data[i].response.lastName;
-      /*var obj = {fullName: fullName, idColilla: response.data[i].response.idColilla, netoPrize: netoPrize, number: response.data[i].response.numberResult, price: response.data[i].response.price};
-      finalData.push(obj);*/
-
+      
       // eslint-disable-next-line no-loop-func
       let infoUser = () =>{return(
         <IonItem key={response.data[i].response.idColilla}>
           <IonLabel>
             <h2>Nombre: {fullName}</h2>
             <h3>Número colilla: {response.data[i].response.idColilla}</h3>
-            <h3>Total a saldar: {netoPrize}</h3>
+            <h3>Total a pagar: {netoPrize}</h3>
           </IonLabel>
         </IonItem>
       )};

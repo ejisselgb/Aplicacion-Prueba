@@ -12,6 +12,8 @@ const Home: React.SFC<any> = (props) => {
 
   const [state, setState] = useState();
 
+  if(localStorage.getItem('user')){localStorage.removeItem('user');}
+
   let getValuesForm = (e: any) =>{
 
     if(e.target.id === "username"){
@@ -36,12 +38,17 @@ const Home: React.SFC<any> = (props) => {
 
   const res = (value: any) =>{
 
-    console.log(value);
-
-    if(value.status === 200){
-      //props.history.push("/MainView")
+    if(value === 200){
+      props.auth('200')
+      setTimeout(() =>{ props.history.push("/MainView") }, 300);
     }else{
-      console.log("Credenciales inválidas");
+      localStorage.removeItem('user');
+      setState({
+        ...state,
+        show: true,
+        header: "Error de ingreso ",
+        message: "Revise sus datos e intente nuevamente"
+      })
     }
   }
 

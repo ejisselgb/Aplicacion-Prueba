@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { IonContent, IonHeader, IonSelect, IonSelectOption, IonPage, IonImg, IonToolbar, IonRow, IonCol, IonButton, IonList,
-IonItem } from '@ionic/react';
+import { IonContent, IonHeader, IonSelect, IonSelectOption, IonPage, IonImg, IonToolbar, IonRow, IonCol, IonButton, IonList, IonAlert } from '@ionic/react';
 import image from '../img/logoGana.png';
 import './MainView.css';
 import {getDate, listLoteries, lastDate, getLastLoteries} from '../services/Loteries.js'; 
@@ -42,14 +41,15 @@ const MainView: React.FC<any> = (props) => {
   }
   
   let findWons = () => {
-    console.log(state);
     props.history.push({
       pathname: '/scrutiny',
       state: { valueLotery: state.valueLotery, dateLotery: dateLotery }
     })
   }
-
-  let receiveCloseLotery = () => {}
+  
+  const setShowAlert = () =>{
+    setState({...state, show: false})
+  }
 
   let closeLotery = (e: any) =>{
     setState({...state, valueLotery: e.target.value})
@@ -57,6 +57,14 @@ const MainView: React.FC<any> = (props) => {
 
   return (
     <IonPage>
+      <IonAlert
+        isOpen={state? state.show : false}
+        onDidDismiss={() => setShowAlert()}
+        header={state ? state.header: null}
+        subHeader={''}
+        message={state ? state.message : null}
+        buttons={['OK']}
+      />
       <IonHeader className="headerPage">
         <IonToolbar>
           <IonImg className="imgLogo" src={image} />
@@ -76,7 +84,7 @@ const MainView: React.FC<any> = (props) => {
         <IonRow>
           <IonCol size="2"></IonCol>
           <IonCol size="8" className="winsContainer">
-            <p>Números ganadores: {lastLoteryDate}</p>
+            <p>Números ganadores sorteo: {lastLoteryDate}</p>
             {state ? state.loteryLast : null}
             <IonList>
               <IonSelectOption value="all">Todas las loterías</IonSelectOption>
